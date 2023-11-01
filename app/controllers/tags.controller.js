@@ -1,6 +1,37 @@
 const db = require("../models");
 const Tags = db.tags;
 
+exports.create2 = async (str) => {
+
+  // Validate request
+  if (!str) {
+    console.warn('tag cannot be empty');
+    return;
+  }
+
+  var tags = await this.findAll2(str);
+  if (tags.length > 0) {
+    console.debug('found tag already');
+    return;
+  }
+
+  // Create a tag
+  const tag = new Tags({
+    tag: str
+  });
+
+  // Save Tutorial in the database
+  tag
+    .save(tag)
+    .then(data => {
+      console.debug(data);
+    })
+    .catch(err => {
+      console.error(err.message || "Some error occurred while creating the tag.");
+    });
+};
+
+
 // Create and Save a new tag
 exports.create = async (req,res) => {
 
@@ -66,7 +97,7 @@ exports.findAll2 = async (str) => {
   } : {};
   return new Promise((resolve, reject) => {
     //Tags.find(condition)
-    Tags.find({ $text: { $search: str } })
+    Tags.find({  tag: str } )
       .then(data => {
         resolve(data);
       })

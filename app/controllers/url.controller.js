@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 
   //insert tags
   req.body.tags.forEach(async e => {
-   await tagcontroller.create(e);
+   await tagcontroller.create2(e);
   });
 };
 
