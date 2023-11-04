@@ -3,6 +3,9 @@ const cors = require("cors");
 
 const app = express();
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 // enable cors
 const allowCrossDomain = (req, res, next) => {
   res.header(`Access-Control-Allow-Origin`, `*`);
@@ -22,7 +25,8 @@ const db = require("./app/models");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    dbName: 'progress'
   })
   .then(() => {
     console.log("Connected to the database!");
@@ -38,6 +42,7 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/turorial.routes")(app);
+require("./app/routes/topic.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
